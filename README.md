@@ -83,6 +83,8 @@ Copy each secret file into file without `.sample` in filename and populate it. A
 
 ## Testing notes
 
+- Updated node version to 15.2.0
+
 ## License
 
 Copyright (c) 2019 Rendered Text
