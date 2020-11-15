@@ -81,8 +81,11 @@ Check out `.semaphore/` folder - steps described there have helpful comments to 
 Also check out `.semaphore/secrets` folder. To configure deploy you need to create and populate all those secrets.
 Copy each secret file into file without `.sample` in filename and populate it. All of them have useful description comments to help you out.
 
+## Testing notes
+
 ## License
 
 Copyright (c) 2019 Rendered Text
 
 Distributed under the MIT License. See the file [LICENSE.md](./LICENSE.md).
+
