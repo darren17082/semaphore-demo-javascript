@@ -1,9 +1,12 @@
-container:
-  image: node:latest
+task:
+  name: client npm install and cache
+  container:
+    image: node:latest
+  setup_script:
+    - echo "Start the setup script!"
+    - nvm use
+    - node --version
+    - cd src/client
+    - npm install
 
-check_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat yarn.lock
-    populate_script: yarn install
-  test_script: yarn test
+
