@@ -1,0 +1,90 @@
+container:
+  image: node:latest
+
+client_setup_task:
+  name: client npm install and cache
+  node_modules_cache:
+    folder: node_modules
+    reupload_on_changes: false # since there is a fingerprint script
+    fingerprint_script:
+      - echo $CIRRUS_OS
+      - node --version
+  setup_script:
+    - echo "Start the setup script!"
+    - node --version
+    - cd src/client
+    - npm install
+
+server_setup_task:
+  name: server npm install and cache
+  node_modules_cache:
+    folder: node_modules
+    reupload_on_changes: false # since there is a fingerprint script
+    fingerprint_script:
+      - echo $CIRRUS_OS
+      - node --version
+  setup_script:
+    - cd src/client
+    - npm install
+
+
+task:
+  name: Client Lint
+  depends_on:
+    - client_setup_task
+    - server_setup_task
+  test_script:
+    - cd src/client
+    - npm run lint
+    
+    
+task:
+  name: Server Lint
+  depends_on:
+    - client_setup_task
+    - server_setup_task
+  test_script:
+    - cd src/server
+    - npm run lint
+    
+task:
+  name: Client Tests
+  depends_on:
+    - client_setup_task
+    - server_setup_task
+  test_script:
+    - cd src/client
+    - npm test
+    
+    
+task:
+  name: Server Tests
+  depends_on:
+    - client_setup_task
+    - server_setup_task
+  test_script:
+    - cd src/server
+    - npm test
+      
+    
+task:
+  name: Setup E2e Tests
+  setup_script:
+    - sem-service start postgres
+    - sudo apt-get install -y libgtk2.0-0
+ 
+task:
+  name: Client E2E Tests
+  test_script:
+    - cd src/client
+    - npx cypress install
+    - npm run test:e2e'
+    
+task:
+  name: Server E2E Tests
+  test_script:
+    - cd src/server
+    - cp ormconfig.ci.json ormconfig.json
+    - 'npm run migrate:up'
+    - 'npm run test:e2e'
+
