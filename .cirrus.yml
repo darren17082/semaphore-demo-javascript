@@ -31,8 +31,8 @@ server_setup_task:
 task:
   name: Client Lint
   depends_on:
-    - client_setup_task
-    - server_setup_task
+    - client npm install and cache
+    - server npm install and cache
   test_script:
     - cd src/client
     - npm run lint
@@ -41,8 +41,8 @@ task:
 task:
   name: Server Lint
   depends_on:
-    - client_setup_task
-    - server_setup_task
+    - client npm install and cache
+    - server npm install and cache
   test_script:
     - cd src/server
     - npm run lint
@@ -50,8 +50,8 @@ task:
 task:
   name: Client Tests
   depends_on:
-    - client_setup_task
-    - server_setup_task
+    - client npm install and cache
+    - server npm install and cache
   test_script:
     - cd src/client
     - npm test
@@ -60,8 +60,8 @@ task:
 task:
   name: Server Tests
   depends_on:
-    - client_setup_task
-    - server_setup_task
+    - client npm install and cache
+    - server npm install and cache
   test_script:
     - cd src/server
     - npm test
@@ -69,12 +69,18 @@ task:
     
 task:
   name: Setup E2e Tests
+  depends_on:
+    - client npm install and cache
+    - server npm install and cache
   setup_script:
     - sem-service start postgres
     - sudo apt-get install -y libgtk2.0-0
  
 task:
   name: Client E2E Tests
+  depends_on:
+    - client npm install and cache
+    - server npm install and cache
   test_script:
     - cd src/client
     - npx cypress install
@@ -82,6 +88,9 @@ task:
     
 task:
   name: Server E2E Tests
+  depends_on:
+    - client npm install and cache
+    - server npm install and cache
   test_script:
     - cd src/server
     - cp ormconfig.ci.json ormconfig.json
