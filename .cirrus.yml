@@ -1,7 +1,7 @@
 container:
   image: node:latest
 
-task:
+client_setup_task:
   name: client npm install and cache
   node_modules_cache:
     folder: node_modules
@@ -15,7 +15,7 @@ task:
     - cd src/client
     - npm install
 
-task:
+server_setup_task:
   name: server npm install and cache
   node_modules_cache:
     folder: node_modules
@@ -30,6 +30,9 @@ task:
 
 task:
   name: Client Lint
+  depends_on:
+    - client_setup_task
+    - server_setup_task
   test_script:
     - cd src/client
     - npm run lint
@@ -37,12 +40,18 @@ task:
     
 task:
   name: Server Lint
+  depends_on:
+    - client_setup_task
+    - server_setup_task
   test_script:
     - cd src/server
     - npm run lint
     
 task:
   name: Client Tests
+  depends_on:
+    - client_setup_task
+    - server_setup_task
   test_script:
     - cd src/client
     - npm test
@@ -50,6 +59,9 @@ task:
     
 task:
   name: Server Tests
+  depends_on:
+    - client_setup_task
+    - server_setup_task
   test_script:
     - cd src/server
     - npm test
