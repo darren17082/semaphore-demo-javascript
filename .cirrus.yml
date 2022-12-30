@@ -14,6 +14,8 @@ client_setup_task:
     - node --version
     - cd src/client
     - npm install
+    - npm install yarn --global
+    - sudo yarn global add tslint typescript
 
 server_setup_task:
   name: server npm install and cache
@@ -26,6 +28,8 @@ server_setup_task:
   setup_script:
     - cd src/client
     - npm install
+    - npm install yarn --global
+    - sudo yarn global add tslint typescript
 
 
 task:
