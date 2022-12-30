@@ -1,0 +1,17 @@
+task:
+  name: client npm install and cache
+  container:
+    image: node:latest
+  setup_script:
+    - echo "Start the setup script!"
+    - node --version
+    - cd src/client
+    - npm install
+
+task:
+  name: server npm install and cache
+  container:
+    image: node:latest
+  setup_script:
+    - cd src/client
+    - npm install
