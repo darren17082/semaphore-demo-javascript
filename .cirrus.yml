@@ -1,0 +1,23 @@
+task:
+  name: client npm install and cache
+  container:
+    image: node:latest
+  node_modules_cache:
+    folder: client-node-modules
+    reupload_on_changes: false # since there is a fingerprint script
+    fingerprint_script:
+      - echo $CIRRUS_OS
+      - node --version
+  setup_script:
+    - echo "Start the setup script!"
+    - node --version
+    - cd src/client
+    - npm install
+
+task:
+  name: server npm install and cache
+  container:
+    image: node:latest
+  setup_script:
+    - cd src/client
+    - npm install
